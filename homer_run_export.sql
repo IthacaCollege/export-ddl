@@ -13,7 +13,7 @@ UNION
 select distinct owner, TYPE, NAME from dba_source where upper(text) like '%ITHACA%'
 and owner in ('BANINST1', 'GENERAL', 'SATURN') or owner like '%MGR'
 AND type IN ('FUNCTION','MATERIALIZED VIEW','PACKAGE','PACKAGE BODY','PROCEDURE','SEQUENCE','SYNONYM','TABLE','TRIGGER','TYPE','VIEW');
-ithaca.ithaca_ddl_export.p_object_script(rc,'schema/');
+ithaca.ithaca_ddl_export.p_object_script(rc);
 end;
 /
 
