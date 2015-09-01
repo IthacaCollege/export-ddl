@@ -2,8 +2,8 @@
 --  DDL for Package ITHACA_DDL_EXPORT
 --------------------------------------------------------
 
-  --GRANT EXECUTE ON UTL_FILE TO "ITHACA";
-  GRANT INHERIT PRIVILEGES ON USER "SYS" TO "ITHACA"; -- http://docs.oracle.com/database/121/DBSEG/dr_ir.htm#DBSEG653
+  -- GRANT EXECUTE ON UTL_FILE TO "ITHACA";
+  -- GRANT INHERIT PRIVILEGES ON USER "SYS" TO "ITHACA"; -- http://docs.oracle.com/database/121/DBSEG/dr_ir.htm#DBSEG653
 
   CREATE OR REPLACE PACKAGE "ITHACA"."ITHACA_DDL_EXPORT" AUTHID CURRENT_USER AS
 
