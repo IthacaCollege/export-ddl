@@ -2,9 +2,15 @@
 
 # select LISTAGG(owner, ',') WITHIN GROUP (ORDER BY owner) from (select distinct owner from dba_objects where owner like '%MGR');
 
-DIR=$PWD/schema
+DIR=$1
 OWNERS="ITHACA BANINST1 GENERAL SATURN BWGMGR BWLMGR BWRMGR BWSMGR FAISMGR FIMSMGR ICMGR ODSMGR TAISMGR"
 TYPES="FUNCTIONS MATERIALIZED_VIEWS PACKAGES PACKAGE_BODIES PROCEDURES SEQUENCES TABLES TRIGGERS TYPES VIEWS"
+
+if [[ ! -d "$DIR" ]]
+then
+    echo "Usage: $0 path"
+    exit
+fi
 
 echo '-- Create Directories' > create_directories.sql
 echo 'SET DEFINE OFF TERM ON ECHO ON SERVEROUTPUT ON BUFFER 1048576' >> create_directories.sql
