@@ -9,12 +9,8 @@ EXECUTE IMMEDIATE 'GRANT INHERIT PRIVILEGES ON USER "SYS" TO "ITHACA"';
 
 -- cursor for objects to export
 open rc for
-SELECT owner, object_type, object_name FROM sys.dba_objects WHERE owner='ITHACA'
-AND object_type IN ('FUNCTION','MATERIALIZED VIEW','PACKAGE','PACKAGE BODY','PROCEDURE','SEQUENCE','SYNONYM','TABLE','TRIGGER','TYPE','VIEW')
-UNION
-select distinct owner, TYPE, NAME from dba_source where upper(text) like '%ITHACA%'
-and owner in ('BANINST1', 'GENERAL', 'SATURN') or owner like '%MGR'
-AND type IN ('FUNCTION','MATERIALIZED VIEW','PACKAGE','PACKAGE BODY','PROCEDURE','SEQUENCE','SYNONYM','TABLE','TRIGGER','TYPE','VIEW');
+SELECT owner, object_type, object_name FROM sys.dba_objects WHERE owner in ('ITHACA','NOLIJ')
+AND object_type IN ('FUNCTION','MATERIALIZED VIEW','PACKAGE','PACKAGE BODY','PROCEDURE','SEQUENCE','SYNONYM','TABLE','TRIGGER','TYPE','VIEW');
 
 -- run the export
 ithaca.ithaca_ddl_export.p_object_script(rc);
