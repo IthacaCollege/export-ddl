@@ -10,7 +10,8 @@ fi
 
 cd $DIR
 svn info
-if [[ $? gt 0 ]]
+if [[ $? -gt 0 ]]
+then
     echo "$DIR is not an svn working copy."
     exit
 fi
