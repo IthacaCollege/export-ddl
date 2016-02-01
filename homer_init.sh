@@ -2,20 +2,21 @@
 
 # select LISTAGG(owner, ',') WITHIN GROUP (ORDER BY owner) from (select distinct owner from dba_objects where owner like '%MGR');
 
-DIR=$1
+STARTDIR=`[[ $0 = /* ]] && dirname "$0" || dirname "$PWD/${0#./}"`
+CHECKDIR=$1
 OWNERS="ITHACA BANINST1 GENERAL SATURN BWGMGR BWLMGR BWRMGR BWSMGR FAISMGR FIMSMGR ICMGR ODSMGR TAISMGR"
 TYPES="FUNCTIONS MATERIALIZED_VIEWS PACKAGES PACKAGE_BODIES PROCEDURES SEQUENCES TABLES TRIGGERS TYPES VIEWS"
 
-if [[ ! -d "$DIR" ]]
+if [[ ! -d "$CHECKDIR" ]]
 then
     echo "Usage: $0 path"
     exit
 fi
 
-echo '-- Create Directories' > create_directories.sql
-echo 'SET DEFINE OFF TERM ON ECHO ON SERVEROUTPUT ON BUFFER 1048576' >> create_directories.sql
+echo '-- Create Directories' > $STARTDIR/create_directories.sql
+echo 'SET DEFINE OFF TERM ON ECHO ON SERVEROUTPUT ON BUFFER 1048576' >> $STARTDIR/create_directories.sql
 
-cat >> create_directories.sql <<EOD
+cat >> $STARTDIR/create_directories.sql <<EOD
 declare
 v_chk number;
 ITHACA_DDL_EXPORT_NOT_LOADED EXCEPTION;
@@ -31,19 +32,19 @@ end;
 
 EOD
 
-echo '-- Drop Directories' > drop_directories.sql
-echo 'SET DEFINE OFF TERM ON ECHO ON SERVEROUTPUT ON BUFFER 1048576' >> drop_directories.sql
+echo '-- Drop Directories' > $STARTDIR/drop_directories.sql
+echo 'SET DEFINE OFF TERM ON ECHO ON SERVEROUTPUT ON BUFFER 1048576' >> $STARTDIR/drop_directories.sql
 
 for o in $OWNERS
 do
   for t in $TYPES
   do
-    mkdir -p $DIR/$o/${t:0:30}
+    mkdir -p $CHECKDIR/$o/${t:0:30}
     NAME="EXPORT_${o}_${t}"
-    printf "create or replace directory %s as '%s/%s/%s';\n" ${NAME:0:30} $DIR $o $t >> create_directories.sql
-    printf "drop directory %s;\n" ${NAME:0:30} >> drop_directories.sql
+    printf "create or replace directory %s as '%s/%s/%s';\n" ${NAME:0:30} $CHECKDIR $o $t >> $STARTDIR/create_directories.sql
+    printf "drop directory %s;\n" ${NAME:0:30} >> $STARTDIR/drop_directories.sql
   done
 done
 
-printf "\nexit\n\n" >> create_directories.sql
-printf "\nexit\n\n" >> drop_directories.sql
+printf "\nexit\n\n" >> $STARTDIR/create_directories.sql
+printf "\nexit\n\n" >> $STARTDIR/drop_directories.sql
