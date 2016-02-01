@@ -1,6 +1,6 @@
 #!/bin/bash
 
-STARTDIR=`[[ $0 = /* ]] && "$0" || "$PWD/${0#./}"`
+STARTDIR=`[[ $0 = /* ]] && dirname "$0" || dirname "$PWD/${0#./}"`
 CHECKDIR=$1
 
 if [[ ! -d "$CHECKDIR" ]]
