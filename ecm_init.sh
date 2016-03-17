@@ -4,4 +4,6 @@
 
 . ./functions.sh
 
+OWNERS="ITHACA NOLIJ"
+
 runInit

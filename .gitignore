@@ -1,2 +1,4 @@
 .idea
 schema
+create_directories*.sql
+drop_directories*.sql
