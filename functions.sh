@@ -91,8 +91,16 @@ function runExport {
     sqlplus -S / as sysdba @${DROPDIR}
 
     cd $CHECKDIR
-    svn st | egrep '^[?]' | awk '{print $2}' | xargs svn add --force --quiet
-    svn st | egrep '^[!]' | awk '{print $2}' | xargs svn rm --force --quiet
+    SVNADD=$(svn st | egrep '^[?]')
+    if [[ ${SVNADD} != "" ]]
+    then
+        svn st | egrep '^[?]' | awk '{print $2}' | xargs svn add --force --quiet
+    fi
+    SVNRM=$(svn st | egrep '^[!]')
+    if [[ ${SVNRM} != "" ]]
+    then
+        svn st | egrep '^[!]' | awk '{print $2}' | xargs svn rm --force --quiet
+    fi
     msg="Auto commit from "`date '+%m/%d/%Y %H:%M:%S'`
     svn ci -m "$msg"
 }
