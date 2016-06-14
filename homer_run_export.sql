@@ -13,7 +13,7 @@ SELECT owner, object_type, object_name FROM sys.dba_objects WHERE owner='ITHACA'
 AND object_type IN ('FUNCTION','MATERIALIZED VIEW','PACKAGE','PACKAGE BODY','PROCEDURE','SEQUENCE','SYNONYM','TABLE','TRIGGER','TYPE','VIEW')
 UNION
 select distinct owner, TYPE, NAME from dba_source where upper(text) like '%ITHACA%'
-and owner in ('BANINST1', 'GENERAL', 'SATURN') or owner like '%MGR'
+and owner in ('BANINST1', 'GENERAL', 'SATURN', 'WTAILOR') or owner like '%MGR'
 AND type IN ('FUNCTION','MATERIALIZED VIEW','PACKAGE','PACKAGE BODY','PROCEDURE','SEQUENCE','SYNONYM','TABLE','TRIGGER','TYPE','VIEW');
 
 -- run the export
