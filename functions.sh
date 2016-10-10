@@ -67,6 +67,13 @@ function runExport {
         exit
     fi
 
+    if [[ "$(sqlplus -s / as sysdba @${STARTDIR}/ddl_export_package_check.sql | head -1l)" != "OK" ]]
+    then
+        echo "Adding the export package..."
+        echo "sqlplus / as sysdba @${STARTDIR}/ddl_export_package.sql"
+        sqlplus / as sysdba @${STARTDIR}/ddl_export_package.sql
+    fi
+
     cd ${CHECKDIR}
     svn info
 
