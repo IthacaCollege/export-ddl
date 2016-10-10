@@ -71,7 +71,7 @@ function runExport {
     then
         echo "Adding the export package..."
         echo "sqlplus / as sysdba @${STARTDIR}/ddl_export_package.sql"
-        sqlplus / as sysdba @${STARTDIR}/ddl_export_package.sql
+        echo exit | sqlplus / as sysdba @${STARTDIR}/ddl_export_package.sql
     fi
 
     cd ${CHECKDIR}
