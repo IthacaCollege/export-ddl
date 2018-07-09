@@ -93,6 +93,11 @@ function runExport {
     svn up
 
     cd $STARTDIR
+    FILES=$(find . -type f|fgrep -v .svn)
+    for f in $FILES
+    do
+      rm $f
+    done
     sqlplus -S / as sysdba @${CREATEDIR}
     sqlplus -S / as sysdba @${1}_run_export
     sqlplus -S / as sysdba @${DROPDIR}
