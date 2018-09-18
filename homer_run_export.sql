@@ -9,7 +9,7 @@ EXECUTE IMMEDIATE 'GRANT INHERIT PRIVILEGES ON USER "SYS" TO "ITHACA"';
 
 -- cursor for objects to export
 open rc for
-SELECT owner, object_type, object_name FROM sys.dba_objects WHERE owner='ITHACA'
+SELECT owner, object_type, object_name FROM sys.dba_objects WHERE owner in ('ITHACA','COURSELEAF')
 AND object_type IN ('FUNCTION','MATERIALIZED VIEW','PACKAGE','PACKAGE BODY','PROCEDURE','SEQUENCE','SYNONYM','TABLE','TRIGGER','TYPE','VIEW')
 UNION
 select distinct owner, TYPE, NAME from sys.dba_source where upper(text) like '%ITHACA%'
